@@ -16,6 +16,7 @@ namespace ConsoleUI
             MultiLineAnimation();
             PrintGuestsName();
             PrintWinner();
+            Console.ReadLine();
 
         }
         //variables
@@ -39,31 +40,35 @@ namespace ConsoleUI
             string userName = GetUserInput("Please enter your name");
             int userNum = GenerateRandomNumber(min, max);
             guests.Add(userNum, userName);
-            //need user validation for entering empty values
+
             int num;
-            string guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'"); 
+            string guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'");
+
+            while (guestNames == "" || guestNames == null)
+            {
+                guestNames = GetUserInput("Cannot enter empty value, please enter 'yes' or 'no'");     
+            }
             while (guestNames.ToLower() == "yes")
             {
-                if (guestNames == null || guestNames == "")
-                {
-                    string name2 = GetUserInput("Cannot enter empty value, please enter a name");
-                    int num2 = GenerateRandomNumber(min, max);
-                    while (guests.ContainsKey(num2) == true)
-                    {
-                        num2 = GenerateRandomNumber(min, max);
-                    }
-                    guests.Add(num2, name2);
-                }
                 string anotherName = GetUserInput("Please enter another name");
+                while (anotherName == "")
+                {
+                    anotherName = GetUserInput("Cannot enter empty value, please enter a name");
+                }
                 num = GenerateRandomNumber(min, max);
-                    while (guests.ContainsKey(num) == true)
-                     {
+                while (guests.ContainsKey(num) == true)
+                {
                     num = GenerateRandomNumber(min, max);
-                      }
+                }
                 guests.Add(num, anotherName);
-
-
                 guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'");
+                if (guestNames == "" || guestNames == null)
+                {
+                    while (guestNames == "" || guestNames == null)
+                    {
+                        guestNames = GetUserInput("Cannot enter empty value, please enter 'yes' or 'no'");
+                    }
+                }
             }
 
         }
