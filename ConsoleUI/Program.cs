@@ -11,16 +11,89 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine("Welcome to the Party!!");
+            GetUserInfo();
+            MultiLineAnimation();
+            PrintGuestsName();
+            PrintWinner();
 
         }
+        //variables
+        private static Dictionary<int, string> guests = new Dictionary<int, string>();
+        private static int min = 1000;
+        private static int max = 9999;
+        private static Random rdm = new Random();
 
-        //Start writing your code here
+        //Create Methods for assignment
+
+        //1 Method GetUserInput()
+        static string GetUserInput(string message)
+        {
+            Console.WriteLine(message);
+            string answer = Console.ReadLine();
+            return answer;
+        }
+        //2nd Method GetUserInfo()
+        static void GetUserInfo()
+        {
+            string userName = GetUserInput("Please enter your name");
+            int userNum = GenerateRandomNumber(min, max);
+            guests.Add(userNum, userName);
+            //need user validation for entering empty values
+            int num;
+            string guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'"); 
+            while (guestNames.ToLower() == "yes")
+            {
+                if (guestNames == null || guestNames == "")
+                {
+                    string name2 = GetUserInput("Cannot enter empty value, please enter a name");
+                    int num2 = GenerateRandomNumber(min, max);
+                    while (guests.ContainsKey(num2) == true)
+                    {
+                        num2 = GenerateRandomNumber(min, max);
+                    }
+                    guests.Add(num2, name2);
+                }
+                string anotherName = GetUserInput("Please enter another name");
+                num = GenerateRandomNumber(min, max);
+                    while (guests.ContainsKey(num) == true)
+                     {
+                    num = GenerateRandomNumber(min, max);
+                      }
+                guests.Add(num, anotherName);
 
 
+                guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'");
+            }
 
-
-
+        }
+        //3rd GenerateRandomNumber()
+        static int GenerateRandomNumber(int min, int max)
+        {
+            return rdm.Next(min, max);
+        }
+        //5th Print GuestsName()
+        static void PrintGuestsName()
+        {
+            foreach(KeyValuePair<int, string> kvp in guests)
+            {
+                Console.WriteLine($"{kvp.Value} =======> {kvp.Key}");
+            }
+        }
+        //6th GetRaffleNumber()
+        static int GetRaffleNumber(Dictionary<int, string> people)
+        {
+            List<int> newList = people.Keys.ToList();
+            int random = rdm.Next(newList.Count);
+            int chosen = newList[random];
+            return chosen;
+        }
+        //7th PrintWinner()
+        static void PrintWinner()
+        {
+            int winner = GetRaffleNumber(guests);
+            Console.WriteLine($"The winner is {guests[winner]} and the winning number is {winner}");
+        }
 
         static void MultiLineAnimation() // Credit: https://www.michalbialecki.com/2018/05/25/how-to-make-you-console-app-look-cool/
         {
