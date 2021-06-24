@@ -40,10 +40,8 @@ namespace ConsoleUI
             string userName = GetUserInput("Please enter your name");
             int userNum = GenerateRandomNumber(min, max);
             guests.Add(userNum, userName);
-
             int num;
             string guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'");
-
             while (guestNames == "" || guestNames == null)
             {
                 guestNames = GetUserInput("Cannot enter empty value, please enter 'yes' or 'no'");     
@@ -51,24 +49,25 @@ namespace ConsoleUI
             while (guestNames.ToLower() == "yes")
             {
                 string anotherName = GetUserInput("Please enter another name");
-                while (anotherName == "")
-                {
-                    anotherName = GetUserInput("Cannot enter empty value, please enter a name");
-                }
+                     while (anotherName == "")
+                        {
+                            anotherName = GetUserInput("Cannot enter empty value, please enter a name");
+                        }
+
                 num = GenerateRandomNumber(min, max);
-                while (guests.ContainsKey(num) == true)
-                {
-                    num = GenerateRandomNumber(min, max);
-                }
+                     while (guests.ContainsKey(num) == true)
+                        {
+                            num = GenerateRandomNumber(min, max);
+                        }
                 guests.Add(num, anotherName);
                 guestNames = GetUserInput("Do you want add another name? 'yes' or 'no'");
-                if (guestNames == "" || guestNames == null)
-                {
-                    while (guestNames == "" || guestNames == null)
-                    {
-                        guestNames = GetUserInput("Cannot enter empty value, please enter 'yes' or 'no'");
-                    }
-                }
+                     if (guestNames == "" || guestNames == null)
+                        {
+                            while (guestNames == "" || guestNames == null)
+                                {
+                                   guestNames = GetUserInput("Cannot enter empty value, please enter 'yes' or 'no'");
+                                }
+                        }
             }
 
         }
